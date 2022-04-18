@@ -29,15 +29,6 @@
             android:padding="10dp"
             android:scaleType="fitCenter" />
 
-        <TextView
-            android:id="@+id/dinodesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?attr/textAppearanceBody2" />
-
-
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
 

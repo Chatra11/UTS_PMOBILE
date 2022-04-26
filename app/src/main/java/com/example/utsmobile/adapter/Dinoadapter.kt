@@ -10,31 +10,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.utsmobile.R
 import com.example.utsmobile.model.dino
 
-
+//private lateinit var myListener : Dinoadapter.onItemClickListener
 class Dinoadapter(
-    private val context: Context,
-    private val setdino: List<dino>
+    context: Context?,
+    dinoArrayList: ArrayList<dino>
 ): RecyclerView.Adapter<Dinoadapter.ItemViewHolder>(){
+    var context: Context? = context
+    var dinolist: ArrayList<dino> = dinoArrayList
 
-    private lateinit var myListener : onItemClickListener
 
-    interface onItemClickListener{
-        fun onItemClick(posisi : Int)
-    }
-    fun setOnClickListener(listener : onItemClickListener){
-        myListener = listener
-    }
+//    interface onItemClickListener{
+//        fun onItemClick(posisi : Int)
+//    }
+//    fun setOnClickListener(listener : onItemClickListener){
+//        myListener = listener
+//    }
 
-    class ItemViewHolder(private val view: View , isLitener:onItemClickListener): RecyclerView.ViewHolder(view) {
+    class ItemViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
         val NamadinotextView: TextView = view.findViewById(R.id.dinotitle)
         val imageView: ImageView = view.findViewById(R.id.gambardino)
 //        val descdinotextView: TextView =view.findViewById(R.id.dinodesc)
-
-        init{
-            itemView.setOnClickListener{
-                isLitener.onItemClick(adapterPosition)
-            }
-        }
+//
+//        init{
+//            itemView.setOnClickListener{
+//                isLitener.onItemClick(adapterPosition)
+//            }
+//        }
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -42,16 +43,16 @@ class Dinoadapter(
         val adapterLayout = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item, parent, false)
 
-        return ItemViewHolder(adapterLayout,myListener)
+        return ItemViewHolder(adapterLayout)
     }
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = setdino[position]
+        val item = dinolist[position]
         holder.NamadinotextView.text = item.namadino
         holder.imageView.setImageResource(item.gambardino)
 //        holder.descdinotextView.text = context.resources.getString(item.descdino)
     }
 
     override fun getItemCount(): Int {
-        return setdino.size
+        return dinolist.size
     }
 }

@@ -1,33 +1,47 @@
 package com.example.utsmobile
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.utsmobile.Data.DataDino
 import com.example.utsmobile.adapter.Dinoadapter
-import java.io.Serializable
+import com.example.utsmobile.databinding.ActivityMainBinding
+import com.example.utsmobile.dinoViewHolder.MyDinoViewHolder
+import com.example.utsmobile.model.dino
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity() , LifecycleOwner{
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var recyclerView: RecyclerView
+    var recyclerViewAdapter: Dinoadapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        recyclerView = binding.recylerView
 
-        val mysetdino = DataDino.dataDino
-        val recyclerView = findViewById<RecyclerView>(R.id.recyler_view)
-        var adapter  = Dinoadapter(this, mysetdino)
-        recyclerView.adapter = adapter
+        var viewModel =ViewModelProvider(this).get(MyDinoViewHolder::class.java)
+        viewModel?.dinoMutableLiveData.observe(this ,dinoListUpdateObserver)
 
-        adapter.setOnClickListener(object : Dinoadapter.onItemClickListener{
-            override fun onItemClick(posisi: Int) {
-                val intent = Intent(this@MainActivity,deskripsi_dino::class.java)
-                intent.putExtra("deskripsi",mysetdino[posisi] as Serializable)
-                startActivity(intent)
-            }
 
-        })
+//        recyclerViewAdapter?.setOnClickListener(object : Dinoadapter.onItemClickListener{
+//            override fun onItemClick(posisi: Int) {
+//                val intent = Intent(this@MainActivity,deskripsi_dino::class.java)
+////                intent.putExtra("deskripsi",mysetdino[posisi] as Serializable)
+//                startActivity(intent)
+//            }
+//
+//        })
         recyclerView.setHasFixedSize(true)
-
     }
+    var dinoListUpdateObserver : Observer<ArrayList<dino>?> =
+        Observer<ArrayList<dino>?> { dinoArrayList ->
+            recyclerViewAdapter = Dinoadapter(this@MainActivity, dinoArrayList)
+            recyclerView!!.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerView!!.adapter = recyclerViewAdapter
+        }
 }

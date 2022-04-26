@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import java.io.Serializable
 
 data class dino(
-    val namadino: String,
-    @DrawableRes val gambardino: Int,
-    val descdino: String,
+    var namadino: String,
+    @DrawableRes var  gambardino: Int,
+    var descdino: String,
 ): Serializable

@@ -1,5 +1,6 @@
 package com.example.utsmobile.dinoViewHolder
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.utsmobile.R
@@ -45,5 +46,8 @@ class MyDinoViewHolder : ViewModel(){
     }
     init {
         init()
+    }
+    fun setdatadino(Dino: dino,context: Context){
+        dinoArrayList
     }
 }
